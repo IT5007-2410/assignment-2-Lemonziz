@@ -111,6 +111,7 @@ class TicketToRide extends React.Component {
 
   setSelector(value) {
     /*Q2. Function to set the value of component selector variable based on user's button click.*/
+    this.setState({ selector: value });
   }
   componentDidMount() {
     this.loadData();
@@ -135,6 +136,11 @@ class TicketToRide extends React.Component {
         <h1>Ticket To Ride</h1>
         <div>
           {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
+          <nav>
+            <button onClick={() => setSelector('displayTraveller')}>
+              Display Traveller
+            </button>
+          </nav>
         </div>
         <div>
           {/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
