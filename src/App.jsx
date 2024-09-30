@@ -1,5 +1,5 @@
 /*Q1. JS Variable needs to be created here. Below variable is just an example. Try to add more attributes.*/
-const [Travellers, setTravellers] = useState([
+const initialTravellers = [
   ({
     id: 1,
     name: 'Jack',
@@ -12,7 +12,7 @@ const [Travellers, setTravellers] = useState([
     phone: 88884444,
     bookingTime: new Date()
   })
-]);
+];
 
 function TravellerRow(props) {
   {
