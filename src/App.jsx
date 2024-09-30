@@ -1,6 +1,6 @@
 /*Q1. JS Variable needs to be created here. Below variable is just an example. Try to add more attributes.*/
 const initialTravellers = [
-  ({
+  {
     id: 1,
     name: 'Jack',
     phone: 88885555,
@@ -11,23 +11,28 @@ const initialTravellers = [
     name: 'Rose',
     phone: 88884444,
     bookingTime: new Date()
-  })
+  }
 ];
 
 function TravellerRow(props) {
   {
     /*Q3. Placeholder to initialize local variable based on traveller prop.*/
   }
+  const t = props.traveller || [];
   return (
     <tr>
       {/*Q3. Placeholder for rendering one row of a table with required traveller attribute values.*/}
+      <td>{t.id}</td>
+      <td>{t.name}</td>
+      <td>{t.phone}</td>
+      <td>{t.bookingTime.toLocaleString()}</td>
     </tr>
   );
 }
 
 function Display(props) {
   /*Q3. Write code to render rows of table, reach corresponding to one traveller. Make use of the TravellerRow function that draws one row.*/
-
+  const ts = props.travellers || [];
   return (
     <table className="bordered-table">
       <thead>
@@ -41,6 +46,9 @@ function Display(props) {
       </thead>
       <tbody>
         {/*Q3. write code to call the JS variable defined at the top of this function to render table rows.*/}
+        {ts.map((traveller) => (
+          <TravellerRow key={traveller.id} traveller={traveller} />
+        ))}
       </tbody>
     </table>
   );
@@ -155,7 +163,9 @@ class TicketToRide extends React.Component {
           {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
           {this.state.selector === 'Homepage' && <Homepage />}
           {/*Q3. Code to call component that Displays Travellers.*/}
-          {this.state.selector === 'displayTraveller' && <Display />}
+          {this.state.selector === 'displayTraveller' && (
+            <Display travellers={this.state.travellers} />
+          )}
           {/*Q4. Code to call the component that adds a traveller.*/}
           {this.state.selector === 'addTraveller' && <Add />}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
