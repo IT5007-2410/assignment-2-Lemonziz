@@ -135,12 +135,19 @@ class TicketToRide extends React.Component {
       <div>
         <h1>Ticket To Ride</h1>
         <div>
-          {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
-          <nav>
-            <button onClick={() => setSelector('displayTraveller')}>
-              Display Traveller
-            </button>
-          </nav>
+          {
+            /*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/
+            [
+              ['Homepage', 'Home'],
+              ['displayTraveller', 'Display'],
+              ['addTraveller', 'Add'],
+              ['deleteTraveller', 'Delete']
+            ].map((items, idx) => (
+              <button key={idx} onClick={() => this.setSelector(items[0])}>
+                {items[1]}
+              </button>
+            ))
+          }
         </div>
         <div>
           {/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
