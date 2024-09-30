@@ -151,11 +151,15 @@ class TicketToRide extends React.Component {
         </div>
         <div>
           {/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
-          {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
-          {/*Q3. Code to call component that Displays Travellers.*/}
 
+          {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
+          {this.state.selector === 'Homepage' && <Homepage />}
+          {/*Q3. Code to call component that Displays Travellers.*/}
+          {this.state.selector === 'displayTraveller' && <Display />}
           {/*Q4. Code to call the component that adds a traveller.*/}
+          {this.state.selector === 'addTraveller' && <Add />}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
+          {this.state.selector === 'deleteTraveller' && <Delete />}
         </div>
       </div>
     );
