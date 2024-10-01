@@ -74,7 +74,7 @@ class Add extends React.Component {
       phone: travellerPhone,
       bookingTime: new Date()
     };
-    this.props.book(new_traveller);
+    this.props.bookFunc(new_traveller);
   }
 
   render() {
@@ -97,13 +97,16 @@ class Delete extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     /*Q5. Fetch the passenger details from the deletion form and call deleteTraveller()*/
+    const id = +e.target.travellerid.value;
+    console.log(typeof id);
+    this.props.deleteFunc(id);
   }
 
   render() {
     return (
       <form name="deleteTraveller" onSubmit={this.handleSubmit}>
         {/*Q5. Placeholder form to enter information on which passenger's ticket needs to be deleted. Below code is just an example.*/}
-        <input type="text" name="travellername" placeholder="Name" />
+        <input type="number" name="travellerid" placeholder="ID Number" />
         <button>Delete</button>
       </form>
     );
@@ -147,10 +150,20 @@ class TicketToRide extends React.Component {
   bookTraveller(passenger) {
     /*Q4. Write code to add a passenger to the traveller state variable.*/
     this.setState((prev) => ({ travellers: [...prev.travellers, passenger] }));
+    this.render() {
+      return <p>Successfully added!</p>;
+    }
   }
 
   deleteTraveller(passenger) {
     /*Q5. Write code to delete a passenger from the traveller state variable.*/
+    this.setState((prev) => {
+      const idx = this.state.travellers.findIndex(
+        (traveller) => traveller.id === passenger
+      );
+      const updatedTravellers = prev.travellers.filter((_, i) => i !== idx);
+      return { travellers: updatedTravellers };
+    });
   }
   render() {
     return (
@@ -182,10 +195,18 @@ class TicketToRide extends React.Component {
           )}
           {/*Q4. Code to call the component that adds a traveller.*/}
           {this.state.selector === 'addTraveller' && (
-            <Add travellers={this.state.travellers} book={this.bookTraveller} />
+            <Add
+              travellers={this.state.travellers}
+              bookFunc={this.bookTraveller}
+            />
           )}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
-          {this.state.selector === 'deleteTraveller' && <Delete />}
+          {this.state.selector === 'deleteTraveller' && (
+            <>
+              <Delete deleteFunc={this.deleteTraveller} />
+              <Display travellers={this.state.travellers} />
+            </>
+          )}
         </div>
       </div>
     );
