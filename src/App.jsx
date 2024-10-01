@@ -63,6 +63,18 @@ class Add extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     /*Q4. Fetch the passenger details from the add form and call bookTraveller()*/
+    const travellerName = e.target.travellername.value;
+    const travellerPhone = e.target.phone.value;
+    const lastTraveller =
+      this.props.travellers[this.props.travellers.length - 1];
+    const newID = lastTraveller ? lastTraveller.id + 1 : 1;
+    const new_traveller = {
+      id: newID,
+      name: travellerName,
+      phone: travellerPhone,
+      bookingTime: new Date()
+    };
+    this.props.book(new_traveller);
   }
 
   render() {
@@ -70,6 +82,7 @@ class Add extends React.Component {
       <form name="addTraveller" onSubmit={this.handleSubmit}>
         {/*Q4. Placeholder to enter passenger details. Below code is just an example.*/}
         <input type="text" name="travellername" placeholder="Name" />
+        <input type="text" name="phone" placeholder="Phone Number" />
         <button>Add</button>
       </form>
     );
@@ -133,6 +146,7 @@ class TicketToRide extends React.Component {
 
   bookTraveller(passenger) {
     /*Q4. Write code to add a passenger to the traveller state variable.*/
+    this.setState((prev) => ({ travellers: [...prev.travellers, passenger] }));
   }
 
   deleteTraveller(passenger) {
@@ -167,7 +181,9 @@ class TicketToRide extends React.Component {
             <Display travellers={this.state.travellers} />
           )}
           {/*Q4. Code to call the component that adds a traveller.*/}
-          {this.state.selector === 'addTraveller' && <Add />}
+          {this.state.selector === 'addTraveller' && (
+            <Add travellers={this.state.travellers} book={this.bookTraveller} />
+          )}
           {/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
           {this.state.selector === 'deleteTraveller' && <Delete />}
         </div>
