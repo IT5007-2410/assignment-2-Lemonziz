@@ -116,11 +116,41 @@ class Delete extends React.Component {
 class Homepage extends React.Component {
   constructor() {
     super();
+    this.totalSeats = 10;
   }
   render() {
+    const occupied = this.props.travellers.length;
+    const free = this.totalSeats - occupied;
+    const occupiedSeats = Array.from({ length: occupied }).map((_, idx) => (
+      <button
+        key={`occupied-${idx}`}
+        style={{
+          margin: '5px',
+          width: '30px',
+          height: '30px',
+          border: 'none',
+          backgroundColor: 'grey'
+        }}
+        disabled={true}
+      ></button>
+    ));
+    const freeSeats = Array.from({ length: free }).map((_, idx) => (
+      <button
+        key={`free-${idx}`}
+        style={{
+          margin: '5px',
+          width: '30px',
+          height: '30px',
+          border: 'none',
+          backgroundColor: 'green'
+        }}
+      ></button>
+    ));
     return (
       <div>
         {/*Q2. Placeholder for Homepage code that shows free seats visually.*/}
+        {occupiedSeats}
+        {freeSeats}
       </div>
     );
   }
@@ -150,9 +180,6 @@ class TicketToRide extends React.Component {
   bookTraveller(passenger) {
     /*Q4. Write code to add a passenger to the traveller state variable.*/
     this.setState((prev) => ({ travellers: [...prev.travellers, passenger] }));
-    this.render() {
-      return <p>Successfully added!</p>;
-    }
   }
 
   deleteTraveller(passenger) {
@@ -188,7 +215,9 @@ class TicketToRide extends React.Component {
           {/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
 
           {/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
-          {this.state.selector === 'Homepage' && <Homepage />}
+          {this.state.selector === 'Homepage' && (
+            <Homepage travellers={this.state.travellers} />
+          )}
           {/*Q3. Code to call component that Displays Travellers.*/}
           {this.state.selector === 'displayTraveller' && (
             <Display travellers={this.state.travellers} />
